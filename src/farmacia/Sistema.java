@@ -1,7 +1,5 @@
 package farmacia;
 
-import farmacia.Prescricao;
-
 public class Sistema {
 
     public static void main(String[] args) {
