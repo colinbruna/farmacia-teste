@@ -1,54 +1,45 @@
 package farmacia;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Sistema {
 
     public static void main(String[] args) {
+        List<Medicamento> medicamentos = new ArrayList<>();
+        medicamentos.add(new Medicamento("Paracetamol", "500mg", Sintomas.DOR_DE_CABEÇA));
+        medicamentos.add(new Medicamento("Buscopam", "10mg", Sintomas.DOR_DE_ESTOMAGO));
+        medicamentos.add(new Medicamento("Plasil", "10mg", Sintomas.ENJOO));
+        medicamentos.add(new Medicamento("Polaramine", "2mg", Sintomas.ALERGIA));
 
-        Scanner sc = new Scanner(System.in);
+        System.out.println(medicamentos + "\n");
 
-        Medicamento medicamento = new Medicamento("Paracetamol", "500mg");
-        Paciente paciente = new Paciente(1111111, "Bruna");
+        int opcao = digiteUmaOpcao();
 
-        Prescricao prescricao = new Prescricao(medicamento, paciente);
+        for (Medicamento med : medicamentos) {
+            if (med.getSintomas().getCodigo() == opcao) {
+                System.out.println("Você deve tomar: " + med.getNome() + " " + med.getDose());
+            }
+        }
 
-        System.out.println(prescricao.getMedicamento().getNome());
-        System.out.println(prescricao.getMedicamento().getDose());
-        System.out.println(prescricao.getPaciente().getNome());
-        System.out.println(prescricao.getPaciente());
-
-        System.out.println("**********\n");
-
-        digiteUmaOpcao(sc);
+        if (opcao == 0) {
+            System.out.println("Usuário saiu do sistema.");
+        } else if (opcao > 4) {
+            System.out.println("Sintoma não encontrado na lista, procure um médico!");
+        }
     }
 
-    public static void digiteUmaOpcao(Scanner sc) {
+    public static int digiteUmaOpcao() {
+        Scanner sc = new Scanner(System.in);
 
         System.out.println("Digite a opção que descreva o que está sentindo:");
-        System.out.println("1: Dor de cabeça.");
-        System.out.println("2: Dor de estomâgo.");
-        System.out.println("3: Enjôo.");
-        System.out.println("4: Alergia.");
-        System.out.println("5: Cólica.");
-        System.out.println("0: Sair.");
+        System.out.println("1: " + Sintomas.DOR_DE_CABEÇA.getDescricao());
+        System.out.println("2: " + Sintomas.DOR_DE_ESTOMAGO.getDescricao());
+        System.out.println("3: " + Sintomas.ENJOO.getDescricao());
+        System.out.println("4: " + Sintomas.ALERGIA.getDescricao());
+        System.out.println("0: Sair");
 
-        int opcao = sc.nextInt();
-
-        if (opcao == 1) {
-            System.out.println("Medicamento: Paracetamol");
-        } else if (opcao == 2) {
-            System.out.println("Medicamento: Buscopan");
-        } else if (opcao == 3) {
-            System.out.println("Medicamento: Plasil");
-        } else if (opcao == 4) {
-            System.out.println("Medicamento: Polaramine");
-        } else if (opcao == 5) {
-            System.out.println("Medicamento: Buscopan");
-        } else if (opcao == 0) {
-            System.out.println("O paciente digitou 0, programa terminado.");;
-        } else {
-            System.out.println("Se não encontrou uma opção adequada, procure um médico!");
-        }
+        return sc.nextInt();
     }
 }
